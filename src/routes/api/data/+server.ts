@@ -30,7 +30,7 @@ function normalize(str: string) {
 		.toLowerCase();
 }
 
-export const GET: RequestHandler = async ({ fetch }) => {
+export const GET: RequestHandler = async ({ fetch, setHeaders }) => {
 	const rawSource = await fetchSource(fetch);
 	const source = cleanSource(rawSource);
 
@@ -71,6 +71,10 @@ export const GET: RequestHandler = async ({ fetch }) => {
 			searchable: `${normalize(word)} ${normalize(definition)}`
 		});
 	}
+
+	setHeaders({
+		'Cache-Control': 'public, s-maxage=31536000, max-age=31536000'
+	});
 
 	return json(words);
 };
