@@ -23,6 +23,17 @@
 	let selectedWord: Word | null = null;
 </script>
 
+<svelte:head>
+	<title>Láadan Dictionary</title>
+	<meta name="description" content="An interactive dictionary for Láadan." />
+
+	<meta property="og:title" content="Láadan Dictionary" />
+	<meta
+		property="og:description"
+		content="An interactive dictionary for Láadan."
+	/>
+</svelte:head>
+
 <h1 class="text-3xl font-bold">Láadan Dictionary</h1>
 <p class="mt-2">An interactive dictionary for Láadan.</p>
 
