@@ -1,0 +1,25 @@
+@import 'tailwindcss/base';
+@import 'fonts.postcss';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer base {
+	body {
+		/* @apply bg-gray-50; */
+	}
+}
+
+@layer components {
+	.wrapper {
+		@apply mx-auto max-w-screen-lg px-8;
+	}
+
+	.box {
+		@apply rounded-xl bg-white border-2 border-gray-200;
+	}
+
+	.input {
+		@apply box focus:border-gray-400
+			transition outline-none;
+	}
+}
