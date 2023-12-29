@@ -20,7 +20,7 @@ function cleanSource(source: string) {
 }
 
 function parseHtmlEntities(str: string) {
-	return str.replace(/&(.)acute;/g, '$1\u0301');
+	return str.replaceAll(/&(.)acute;/g, '$1\u0301').replaceAll('&mdash;', '—');
 }
 
 function normalize(str: string) {
@@ -40,12 +40,12 @@ export const GET: RequestHandler = async ({ fetch, setHeaders }) => {
 	const rawWordData = [...source.matchAll(rawWordsRegex)].map(
 		([, word, data]) => ({
 			word: parseHtmlEntities(word),
-			data: parseHtmlEntities(data).replaceAll(/\s+/g, ' ').trim()
+			data: parseHtmlEntities(data.replaceAll(/\s+/g, ' ').trim())
 		})
 	);
 
 	const dataRegex =
-		/^(?:<i>\(OBSOLETE&mdash;see instead: (.+?)\)<\/i> )?\((.+?)\) (?:\[(.+?)\] )?(.+?)(?: {(.+?)})?(?: <i>See also: (.+?)<\/i>)?$/gm;
+		/^(?:<i>\(OBSOLETE—see instead: (.+?)\)<\/i> )?\((.+?)\) (?:\[(.+?)\] )?(.+?)(?: {(.+?)})?(?: <i>See also: (.+?)<\/i>)?$/gm;
 
 	const words: Word[] = [];
 
