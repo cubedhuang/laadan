@@ -75,7 +75,7 @@ export const GET: RequestHandler = async ({ fetch, setHeaders }) => {
 	}
 
 	setHeaders({
-		'Cache-Control': 'public, s-maxage=31536000, max-age=31536000'
+		'Cache-Control': 'public, s-maxage=3600'
 	});
 
 	return json(words);
