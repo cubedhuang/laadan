@@ -1,4 +1,6 @@
 <script lang="ts">
+	import VirtualScroll from 'svelte-virtual-scroll-list';
+
 	import type { Word } from '$lib/types.js';
 
 	import Popup from '$lib/components/Popup.svelte';
@@ -21,11 +23,9 @@
 		shownPartsOfSpeech.includes(word.partOfSpeech)
 	);
 
-	$: filteredWords = usedWords.filter(word => {
-		if (search === '') return true;
-
-		return word.searchable.includes(fixedSearch);
-	});
+	$: filteredWords = search
+		? usedWords.filter(word => word.searchable.includes(fixedSearch))
+		: usedWords;
 
 	$: currentWords = filteredWords.filter(word => !word.successor);
 	$: obsoleteWords = filteredWords.filter(word => word.successor);
@@ -40,6 +40,21 @@
 		} else {
 			selectedWord = word;
 		}
+	}
+
+	function group6<T>(array: T[]): T[][] {
+		const result: T[][] = [];
+
+		for (let i = 0; i < array.length; i += 6) {
+			const group = array.slice(i, i + 6);
+
+			// @ts-expect-error Required for VirtualScroll
+			group.key = i;
+
+			result.push(group);
+		}
+
+		return result;
 	}
 </script>
 
@@ -96,15 +111,25 @@
 
 <div class="mt-4">
 	{#if $view === 'grid'}
-		<div class="mt-4 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-			{#each currentWords as word (word)}
-				<WordSpace {word} on:select={handleSelect} />
-			{/each}
-		</div>
+		{@const groupedWords = group6(currentWords)}
+
+		<VirtualScroll data={groupedWords} key="key" let:data pageMode>
+			<div class="mb-4 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+				{#each data as word (word.key)}
+					<WordSpace {word} on:select={handleSelect} />
+				{/each}
+			</div>
+		</VirtualScroll>
 	{:else}
-		{#each currentWords as word (word)}
-			<WordLine {word} on:select={handleSelect} />
-		{/each}
+		<VirtualScroll
+			data={currentWords}
+			key="key"
+			let:data
+			pageMode
+			keeps={80}
+		>
+			<WordLine word={data} on:select={handleSelect} />
+		</VirtualScroll>
 	{/if}
 </div>
 
@@ -112,15 +137,25 @@
 	<h2 class="mt-8 mb-4 text-2xl font-bold">Obsolete Words</h2>
 
 	{#if $view === 'grid'}
-		<div class="mt-4 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-			{#each obsoleteWords as word (word)}
-				<WordSpace {word} on:select={handleSelect} />
-			{/each}
-		</div>
+		{@const groupedWords = group6(obsoleteWords)}
+
+		<VirtualScroll data={groupedWords} key="key" let:data pageMode>
+			<div class="mb-4 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+				{#each data as word (word.key)}
+					<WordSpace {word} on:select={handleSelect} />
+				{/each}
+			</div>
+		</VirtualScroll>
 	{:else}
-		{#each obsoleteWords as word (word)}
-			<WordLine {word} on:select={handleSelect} />
-		{/each}
+		<VirtualScroll
+			data={obsoleteWords}
+			key="key"
+			let:data
+			pageMode
+			keeps={80}
+		>
+			<WordLine word={data} on:select={handleSelect} />
+		</VirtualScroll>
 	{/if}
 {/if}
 

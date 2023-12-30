@@ -7,5 +7,6 @@ export type Word = {
 	successor?: string;
 	relatedWords: string[];
 
+	key: string;
 	searchable: string;
 };

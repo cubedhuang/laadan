@@ -68,6 +68,7 @@ export const GET: RequestHandler = async ({ fetch, setHeaders }) => {
 			contributor,
 			successor,
 			relatedWords: relatedWords?.split(', ') ?? [],
+			key: words.length.toString(),
 			searchable: `${normalize(word)} ${normalize(definition)}`
 		});
 	}
