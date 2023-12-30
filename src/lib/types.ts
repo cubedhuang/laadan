@@ -16,7 +16,7 @@ export const partOfSpeechNames: Record<string, string> = {
 	ToS: 'speech act',
 	aux: 'auxiliary',
 	conj: 'conjunction',
-	evid: 'evidence',
+	evid: 'evidential',
 	fix: 'affix',
 	interj: 'interjection',
 	n: 'noun',
