@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { distance } from 'fastest-levenshtein';
 	import VirtualScroll from 'svelte-virtual-scroll-list';
 
 	import type { Word } from '$lib/types.js';
@@ -27,8 +28,21 @@
 		? usedWords.filter(word => word.searchable.includes(fixedSearch))
 		: usedWords;
 
-	$: currentWords = filteredWords.filter(word => !word.successor);
-	$: obsoleteWords = filteredWords.filter(word => word.successor);
+	$: sortedWords = search
+		? filteredWords.sort((a, b) => {
+				const aDistance = distance(a.searchableWord, fixedSearch);
+				const bDistance = distance(b.searchableWord, fixedSearch);
+
+				if (aDistance > 5 && bDistance > 5) {
+					return 0;
+				}
+
+				return aDistance - bDistance;
+			})
+		: filteredWords;
+
+	$: currentWords = sortedWords.filter(word => !word.successor);
+	$: obsoleteWords = sortedWords.filter(word => word.successor);
 
 	let selectedWord: Word | null = null;
 

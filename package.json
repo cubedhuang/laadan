@@ -13,6 +13,7 @@
 		"format": "prettier --write ."
 	},
 	"dependencies": {
+		"fastest-levenshtein": "^1.0.16",
 		"svelte-virtual-scroll-list": "^1.3.0"
 	},
 	"devDependencies": {

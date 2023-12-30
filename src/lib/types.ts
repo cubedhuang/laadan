@@ -9,4 +9,5 @@ export type Word = {
 
 	key: string;
 	searchable: string;
+	searchableWord: string;
 };
