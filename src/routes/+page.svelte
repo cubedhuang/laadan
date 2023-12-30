@@ -33,7 +33,22 @@
 				const aDistance = distance(a.searchableWord, fixedSearch);
 				const bDistance = distance(b.searchableWord, fixedSearch);
 
-				if (aDistance > 5 && bDistance > 5) {
+				if (aDistance > 2 && bDistance > 2) {
+					const ai = a.searchableWord.indexOf(fixedSearch);
+					const bi = b.searchableWord.indexOf(fixedSearch);
+
+					if (ai !== -1 && bi !== -1) {
+						return ai - bi;
+					}
+
+					if (ai !== -1) {
+						return -1;
+					}
+
+					if (bi !== -1) {
+						return 1;
+					}
+
 					return 0;
 				}
 
