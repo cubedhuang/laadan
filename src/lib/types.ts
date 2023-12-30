@@ -11,3 +11,19 @@ export type Word = {
 	searchable: string;
 	searchableWord: string;
 };
+
+export const partOfSpeechNames: Record<string, string> = {
+	ToS: 'speech act',
+	aux: 'auxiliary',
+	conj: 'conjunction',
+	evid: 'evidence',
+	fix: 'affix',
+	interj: 'interjection',
+	n: 'noun',
+	phrase: 'phrase',
+	post: 'postposition',
+	pron: 'pronoun',
+	quant: 'quantity',
+	rep: 'repetition',
+	v: 'verb'
+};

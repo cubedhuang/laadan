@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Word } from '$lib/types';
+	import { partOfSpeechNames, type Word } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 
 	export let word: Word;
@@ -18,7 +18,7 @@
 	</button>
 
 	<span class="text-xs text-gray-400">
-		({word.partOfSpeech})
+		({partOfSpeechNames[word.partOfSpeech]})
 	</span>
 
 	{#if word.successor}

@@ -2,7 +2,7 @@
 	import { distance } from 'fastest-levenshtein';
 	import VirtualScroll from 'svelte-virtual-scroll-list';
 
-	import type { Word } from '$lib/types.js';
+	import { partOfSpeechNames, type Word } from '$lib/types';
 
 	import Popup from '$lib/components/Popup.svelte';
 	import WordLine from './WordLine.svelte';
@@ -124,7 +124,7 @@
 				value={partOfSpeech}
 			/>
 
-			{partOfSpeech}
+			{partOfSpeechNames[partOfSpeech]}
 		</label>
 	{/each}
 </div>
@@ -192,7 +192,7 @@
 	<h2 class="text-2xl font-bold">
 		{word.word}
 		<span class="font-normal text-base text-gray-400">
-			{word.partOfSpeech}
+			{partOfSpeechNames[word.partOfSpeech]}
 		</span>
 	</h2>
 

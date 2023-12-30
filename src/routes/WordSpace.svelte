@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Word } from '$lib/types';
+	import { partOfSpeechNames, type Word } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 
 	export let word: Word;
@@ -19,7 +19,7 @@
 	<h2 class="text-xl font-bold">
 		{word.word}
 		<span class="font-normal text-base text-gray-400">
-			{word.partOfSpeech}
+			{partOfSpeechNames[word.partOfSpeech]}
 		</span>
 	</h2>
 
