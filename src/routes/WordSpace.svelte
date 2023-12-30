@@ -7,8 +7,8 @@
 	const dispatch = createEventDispatcher<{ select: Word }>();
 
 	$: definition =
-		word.definition.length > 200
-			? word.definition.slice(0, 200) + '...'
+		word.definition.length > 120
+			? word.definition.slice(0, 120) + '...'
 			: word.definition;
 </script>
 
