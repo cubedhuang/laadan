@@ -34,8 +34,6 @@ export const GET: RequestHandler = async ({ fetch, setHeaders }) => {
 	const rawSource = await fetchSource(fetch);
 	const source = cleanSource(rawSource);
 
-	console.log(source);
-
 	const rawWordsRegex = /<dt>(.+?)<\/dt>\n\t<dd>((?:.|\n)+?)<\/dd>/g;
 	const rawWordData = [...source.matchAll(rawWordsRegex)].map(
 		([, word, data]) => ({
