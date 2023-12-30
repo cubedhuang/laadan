@@ -103,7 +103,7 @@
 
 <div class="mt-6">
 	<select class="px-4 py-1 input cursor-pointer" bind:value={$view}>
-		<option value="grid">Grid</option>
+		<option value="grid">Tiles</option>
 		<option value="list">List</option>
 	</select>
 </div>
