@@ -1,7 +1,7 @@
 import { partOfSpeechNames, type Word } from '$lib/types.js';
 
 export async function load({ fetch }) {
-	const words = (await fetch('/api/data').then(r => r.json())) as Word[];
+	const words = (await fetch('/api/dictionary').then(r => r.json())) as Word[];
 
 	return {
 		words,
