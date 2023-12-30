@@ -9,12 +9,19 @@
 	export let data;
 
 	$: words = data.words;
+	$: partsOfSpeech = data.partsOfSpeech;
+
+	let shownPartsOfSpeech = data.partsOfSpeech.slice();
 
 	let search = '';
 
 	$: fixedSearch = search.trim().toLowerCase();
 
-	$: filteredWords = words.filter(word => {
+	$: usedWords = words.filter(word =>
+		shownPartsOfSpeech.includes(word.partOfSpeech)
+	);
+
+	$: filteredWords = usedWords.filter(word => {
 		if (search === '') return true;
 
 		return word.searchable.includes(fixedSearch);
@@ -55,6 +62,27 @@
 		<option value="grid">Grid</option>
 		<option value="list">List</option>
 	</select>
+</div>
+
+<div class="mt-2 flex gap-1 flex-wrap">
+	{#each partsOfSpeech as partOfSpeech}
+		{@const active = shownPartsOfSpeech.includes(partOfSpeech)}
+
+		<label
+			class="interactive px-3 py-0.5 {active
+				? 'bg-purple-200'
+				: 'text-gray-400'}"
+		>
+			<input
+				class="sr-only"
+				type="checkbox"
+				bind:group={shownPartsOfSpeech}
+				value={partOfSpeech}
+			/>
+
+			{partOfSpeech}
+		</label>
+	{/each}
 </div>
 
 <div class="mt-2">
