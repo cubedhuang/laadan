@@ -7,7 +7,7 @@ function fetchSource(fetcher: typeof fetch) {
 	// Decode iso-8859-1 text
 	return fetcher('http://www.laadanlanguage.org/l2e.html')
 		.then(r => r.arrayBuffer())
-		.then(b => new TextDecoder('iso-8859-1').decode(b));
+		.then(b => new TextDecoder('windows-1252').decode(b));
 }
 
 function cleanSource(source: string) {
