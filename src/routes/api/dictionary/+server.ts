@@ -1,13 +1,19 @@
 import { json } from '@sveltejs/kit';
+import { dev } from '$app/environment';
 import type { Word } from '$lib/types';
 
 import type { RequestHandler } from './$types';
 
-function fetchSource(fetcher: typeof fetch) {
-	// Decode iso-8859-1 text
-	return fetcher('http://www.laadanlanguage.org/l2e.html')
-		.then(r => r.arrayBuffer())
-		.then(b => new TextDecoder('iso-8859-1').decode(b));
+async function fetchSource(fetcher: typeof fetch) {
+	const response = await fetcher('http://www.laadanlanguage.org/l2e.html');
+
+	// Decode iso-8859-1 text on local machine
+	if (dev) {
+		const arrayBuffer = await response.arrayBuffer();
+		return new TextDecoder('iso-8859-1').decode(arrayBuffer);
+	}
+
+	return await response.text();
 }
 
 function cleanSource(source: string) {
