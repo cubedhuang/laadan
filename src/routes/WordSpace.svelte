@@ -5,6 +5,11 @@
 	export let word: Word;
 
 	const dispatch = createEventDispatcher<{ select: Word }>();
+
+	$: definition =
+		word.definition.length > 200
+			? word.definition.slice(0, 200) + '...'
+			: word.definition;
 </script>
 
 <button
@@ -25,7 +30,7 @@
 	{/if}
 
 	<p class="mt-2" class:text-gray-400={word.successor}>
-		{word.definition}
+		{definition}
 	</p>
 
 	{#if word.relatedWords.length}
